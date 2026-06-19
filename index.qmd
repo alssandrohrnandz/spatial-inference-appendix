@@ -1,0 +1,34 @@
+---
+title: "Mathematical Foundations of Spatiotemporal Allele Inference"
+subtitle: "A Likelihood-Based Framework for Spatial Population Genetics"
+author: "Hector Alessandro López Hernández"
+date: last-modified
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 3
+    code-fold: true
+---
+
+## Welcome
+
+This documentation provides the comprehensive mathematical, physical, and statistical background behind our likelihood-based inference method. By scanning the QR code, you have accessed the underlying framework used to model the dispersal and natural selection of alleles from spatiotemporal and ancient DNA (aDNA) data.
+
+### Framework Overview
+
+Our pipeline bridges partial differential equations (PDEs) with population genetics statistics to infer global and local evolutionary parameters:
+
+* **Global Diffusion ($D$):** Governs spatial migration and population connectivity across the geographic landscape.
+* **Local Selection ($s$):** Measures the adaptive advantage or disadvantage of specific single-nucleotide polymorphisms (SNPs).
+
+---
+
+## Structure of the Documentation
+
+Navigate through the mathematical derivation using the links below or the sidebar menu:
+
+1.  [The Spatial Diffusion Model (Fisher-KPP)](diffusion_pde.qmd) — Derivation of the continuous and discrete space models.
+2.  [Composite Likelihood Estimation](likelihood_framework.qmd) — Statistical implementation using Binomial distributions for discrete parameter inference.
+
+For reproducibility, the complete implementation using R, SLiM, and SLURM architectures is available in our repository.

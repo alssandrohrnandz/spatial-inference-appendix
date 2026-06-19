@@ -1,0 +1,93 @@
+[
+  {
+    "objectID": "likelihood_framework.html",
+    "href": "likelihood_framework.html",
+    "title": "Composite Likelihood Framework",
+    "section": "",
+    "text": "An allele frequency trajectory across time and space consists of independent Single Nucleotide Polymorphisms (SNPs). Assuming independence between loci (ignoring linkage disequilibrium across sampled fragments), we construct a Joint Composite Log-Likelihood (\\(\\mathcal{L}_{joint}\\)) by summing individual log-likelihoods:\n\\[\\mathcal{L}_{joint}(D, s) = \\sum_{k=1}^{M} \\log L_k(D, s)\\]\nWhere \\(M\\) is the total batch size of independent SNPs analyzed, and \\(\\log L_k\\) represents the log-likelihood of the \\(k\\)-th SNP given its empirical spatiotemporal samples."
+  },
+  {
+    "objectID": "likelihood_framework.html#joint-composite-log-likelihood",
+    "href": "likelihood_framework.html#joint-composite-log-likelihood",
+    "title": "Composite Likelihood Framework",
+    "section": "",
+    "text": "An allele frequency trajectory across time and space consists of independent Single Nucleotide Polymorphisms (SNPs). Assuming independence between loci (ignoring linkage disequilibrium across sampled fragments), we construct a Joint Composite Log-Likelihood (\\(\\mathcal{L}_{joint}\\)) by summing individual log-likelihoods:\n\\[\\mathcal{L}_{joint}(D, s) = \\sum_{k=1}^{M} \\log L_k(D, s)\\]\nWhere \\(M\\) is the total batch size of independent SNPs analyzed, and \\(\\log L_k\\) represents the log-likelihood of the \\(k\\)-th SNP given its empirical spatiotemporal samples."
+  },
+  {
+    "objectID": "likelihood_framework.html#probability-distributions",
+    "href": "likelihood_framework.html#probability-distributions",
+    "title": "Composite Likelihood Framework",
+    "section": "2. Probability Distributions",
+    "text": "2. Probability Distributions\nWe evaluate the fit between the empirical observation (sampled chromosome count \\(x\\) out of a total \\(N\\) chromosomes) and the deterministic PDE prediction \\(\\hat{p}\\) using two distinct statistical frameworks:\n\nStandard Binomial Model\nThe standard Binomial distribution assumes that sampling variance is strictly defined by the mean trajectory:\n\\[\\log L_k(D, s) = \\sum_{j=1}^{S} \\left[ \\log \\binom{N_j}{x_j} + x_j \\log(\\hat{p}_j) + (N_j - x_j)\\log(1 - \\hat{p}_j) \\right]\\]\nWhere \\(S\\) is the number of historical spatiotemporal sampling windows available for that specific allele."
+  },
+  {
+    "objectID": "likelihood_framework.html#discrete-grid-search-strategy",
+    "href": "likelihood_framework.html#discrete-grid-search-strategy",
+    "title": "Composite Likelihood Framework",
+    "section": "2. Discrete Grid Search Strategy",
+    "text": "2. Discrete Grid Search Strategy\nInstead of relying on continuous gradient-based optimization, the parameter space is evaluated across a predefined, discrete grid of biologically plausible values for the global Diffusion Coefficient (\\(D\\)) and local selection (\\(s\\)).\n\nThe Pipeline Flow\nFor each combination of parameters defined in the grid matrix, the pipeline computes the joint score using a brute-force approach:"
+  },
+  {
+    "objectID": "diffusion_pde.html",
+    "href": "diffusion_pde.html",
+    "title": "The Spatial Diffusion Model",
+    "section": "",
+    "text": "To track how the expected frequency of an allele, \\(p(t, x, y)\\), changes across a continuous geographical landscape over time, we employ a generalized two-dimensional Fisher-KPP (Kolmogorov-Petrovsky-Piscounov) partial differential equation (PDE):\n\\[\\frac{\\partial p}{\\partial t} = D \\left( \\frac{\\partial^2 p}{\\partial x^2} + \\frac{\\partial^2 p}{\\partial y^2} \\right) + \\phi(p)\\]\nWhere: * \\(D\\) represents the Diffusion Coefficient, corresponding to the spatial migration rate per generation. * \\(\\phi(p)\\) is the Reaction Term, modeling natural selection.\nAssuming a generalized selection model with selection coefficient \\(s\\) and dominance \\(h\\), the selection term is defined as:\n\\[\\phi(p) = p(1-p)\\Big[p \\cdot 2s + h \\cdot (1-2p)\\Big]\\]\n\nNeutral Case Scenario: For strictly neutral alleles (\\(s = 0\\)), the reaction term collapses (\\(\\phi(p) = 0\\)), reducing the model to pure Laplacian spatial diffusion: \\[\\frac{\\partial p}{\\partial t} = D \\left( \\frac{\\partial^2 p}{\\partial x^2} + \\frac{\\partial^2 p}{\\partial y^2} \\right)\\]"
+  },
+  {
+    "objectID": "diffusion_pde.html#continuous-space-the-fisher-kpp-equation",
+    "href": "diffusion_pde.html#continuous-space-the-fisher-kpp-equation",
+    "title": "The Spatial Diffusion Model",
+    "section": "",
+    "text": "To track how the expected frequency of an allele, \\(p(t, x, y)\\), changes across a continuous geographical landscape over time, we employ a generalized two-dimensional Fisher-KPP (Kolmogorov-Petrovsky-Piscounov) partial differential equation (PDE):\n\\[\\frac{\\partial p}{\\partial t} = D \\left( \\frac{\\partial^2 p}{\\partial x^2} + \\frac{\\partial^2 p}{\\partial y^2} \\right) + \\phi(p)\\]\nWhere: * \\(D\\) represents the Diffusion Coefficient, corresponding to the spatial migration rate per generation. * \\(\\phi(p)\\) is the Reaction Term, modeling natural selection.\nAssuming a generalized selection model with selection coefficient \\(s\\) and dominance \\(h\\), the selection term is defined as:\n\\[\\phi(p) = p(1-p)\\Big[p \\cdot 2s + h \\cdot (1-2p)\\Big]\\]\n\nNeutral Case Scenario: For strictly neutral alleles (\\(s = 0\\)), the reaction term collapses (\\(\\phi(p) = 0\\)), reducing the model to pure Laplacian spatial diffusion: \\[\\frac{\\partial p}{\\partial t} = D \\left( \\frac{\\partial^2 p}{\\partial x^2} + \\frac{\\partial^2 p}{\\partial y^2} \\right)\\]"
+  },
+  {
+    "objectID": "diffusion_pde.html#discrete-space-discretization-finite-differences",
+    "href": "diffusion_pde.html#discrete-space-discretization-finite-differences",
+    "title": "The Spatial Diffusion Model",
+    "section": "2. Discrete Space Discretization (Finite Differences)",
+    "text": "2. Discrete Space Discretization (Finite Differences)\nSince computational analysis takes place on a finite geographic grid of size \\(n \\times n\\) (with spatial steps \\(\\Delta x, \\Delta y\\)), we discretize the spatial laplacian using a second-order conservative Finite Difference Method.\n\nFlux Boundary Conditions\nTo preserve mass and handle boundary limits gracefully, we calculate numerical fluxes at the cell interfaces. The spatial updating scheme implemented in R for a grid cell \\((i, j)\\) is formulated as follows:\n\n\nShow R Code\ndiffusion2D &lt;- function(t, conc, par) {\nConc &lt;- matrix(nrow = n, ncol = n, data = conc) # vector to 2-D matrix\ndConc &lt;- Conc*(1-Conc)*(Conc*d+s*(1-2*Conc)) # consumption\nBND &lt;- rep(1, n) # boundary concentration\n\n# constant production in certain cells\ndConc[ii]&lt;- dConc[ii]+ p\n# diffusion in X-direction; boundaries=imposed concentration\n\nFlux &lt;- -Dx * rbind(rep(0, n), (Conc[2:n,]-Conc[1:(n-1),]),\nrep(0, n) )/dx\ndConc &lt;- dConc - (Flux[2:(n+1),] - Flux[1:n,])/dx\n\n# diffusion in Y-direction\n\nFlux &lt;- -Dy * cbind(rep(0, n), (Conc[,2:n]-Conc[,1:(n-1)]),\nrep(0, n))/dy\ndConc &lt;- dConc - (Flux[,2:(n+1)]-Flux[,1:n])/dy\nreturn(list(as.vector(dConc)))\n}\n\n\nThis numerical structure enforces reflection boundaries (zero-flux) at the edges of the geographic grid, ensuring that allele frequencies are constrained mathematically between \\([0, 1]\\)."
+  },
+  {
+    "objectID": "BackgroundResearch_Bibliography.html",
+    "href": "BackgroundResearch_Bibliography.html",
+    "title": "Background Research and Consulted Bibliography",
+    "section": "",
+    "text": "Spatiotemporal studies of human allele frequencies provide us key findings about how the genetic variation have been shaped by both local adaptations and demographic process (Bradburd and Ralph 2019). To understand these dynamics, mathematical approaches (Fisher-KPP) models allele frequency changes across time and space Muktupavela et al. (2022). However, current models often lack a multi-locus framework, failing to fully leverage the vast amount of available ancient SNP information. Here, we extend the Fisher-KPP framework to estimate the dispersion and selection parameters from European populations"
+  },
+  {
+    "objectID": "BackgroundResearch_Bibliography.html#background-research",
+    "href": "BackgroundResearch_Bibliography.html#background-research",
+    "title": "Background Research and Consulted Bibliography",
+    "section": "",
+    "text": "Spatiotemporal studies of human allele frequencies provide us key findings about how the genetic variation have been shaped by both local adaptations and demographic process (Bradburd and Ralph 2019). To understand these dynamics, mathematical approaches (Fisher-KPP) models allele frequency changes across time and space Muktupavela et al. (2022). However, current models often lack a multi-locus framework, failing to fully leverage the vast amount of available ancient SNP information. Here, we extend the Fisher-KPP framework to estimate the dispersion and selection parameters from European populations"
+  },
+  {
+    "objectID": "BackgroundResearch_Bibliography.html#references-used-in-this-poster",
+    "href": "BackgroundResearch_Bibliography.html#references-used-in-this-poster",
+    "title": "Background Research and Consulted Bibliography",
+    "section": "References used in this Poster",
+    "text": "References used in this Poster\n\n\nBradburd, Gideon S, and Peter L Ralph. 2019. “Spatial Population Genetics: It’s about Time.” Annual Review of Ecology, Evolution, and Systematics 50 (November): 427–49. https://doi.org/10.1146/annurev-ecolsys-110316-022659.\n\n\nMuktupavela, Rasa A, Martin Petr, Laure Ségurel, Thorfinn Korneliussen, John Novembre, and Fernando Racimo. 2022. “Modeling the Spatiotemporal Spread of Beneficial Alleles Using Ancient Genomes.” eLife 11: e73767. https://doi.org/10.7554/eLife.73767.\n\n\nNovembre, John, Alison P Galvani, and Montgomery Slatkin. 2005. “The Geographic Spread of the CCR5 Δ32 HIV-Resistance Allele.” PLOS Biology 3 (October): e339. https://doi.org/10.1371/journal.pbio.0030339."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Mathematical Foundations of Spatiotemporal Allele Inference",
+    "section": "",
+    "text": "This documentation provides the comprehensive mathematical, physical, and statistical background behind our likelihood-based inference method. By scanning the QR code, you have accessed the underlying framework used to model the dispersal and natural selection of alleles from spatiotemporal and ancient DNA (aDNA) data.\n\n\nOur pipeline bridges partial differential equations (PDEs) with population genetics statistics to infer global and local evolutionary parameters:\n\nGlobal Diffusion (\\(D\\)): Governs spatial migration and population connectivity across the geographic landscape.\nLocal Selection (\\(s\\)): Measures the adaptive advantage or disadvantage of specific single-nucleotide polymorphisms (SNPs)."
+  },
+  {
+    "objectID": "index.html#welcome",
+    "href": "index.html#welcome",
+    "title": "Mathematical Foundations of Spatiotemporal Allele Inference",
+    "section": "",
+    "text": "This documentation provides the comprehensive mathematical, physical, and statistical background behind our likelihood-based inference method. By scanning the QR code, you have accessed the underlying framework used to model the dispersal and natural selection of alleles from spatiotemporal and ancient DNA (aDNA) data.\n\n\nOur pipeline bridges partial differential equations (PDEs) with population genetics statistics to infer global and local evolutionary parameters:\n\nGlobal Diffusion (\\(D\\)): Governs spatial migration and population connectivity across the geographic landscape.\nLocal Selection (\\(s\\)): Measures the adaptive advantage or disadvantage of specific single-nucleotide polymorphisms (SNPs)."
+  },
+  {
+    "objectID": "index.html#structure-of-the-documentation",
+    "href": "index.html#structure-of-the-documentation",
+    "title": "Mathematical Foundations of Spatiotemporal Allele Inference",
+    "section": "Structure of the Documentation",
+    "text": "Structure of the Documentation\nNavigate through the mathematical derivation using the links below or the sidebar menu:\n\nThe Spatial Diffusion Model (Fisher-KPP) — Derivation of the continuous and discrete space models.\nComposite Likelihood Estimation — Statistical implementation using Binomial distributions for discrete parameter inference.\n\nFor reproducibility, the complete implementation using R, SLiM, and SLURM architectures is available in our repository."
+  }
+]

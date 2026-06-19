@@ -1,0 +1,16 @@
+---
+title: "Background Research and Consulted Bibliography"
+subtitle: "Thanks for QR me <3"
+format:
+  html:
+    toc: true
+---
+
+## Background Research
+
+Spatiotemporal studies of human allele frequencies provide us key findings about how the genetic variation have been shaped by both local adaptations and demographic process [@Bradburd2019]. To understand these dynamics, mathematical approaches (Fisher-KPP) models allele frequency changes across time and space [@Novembre2005,@Muktupavela2022]. However, current models often lack a multi-locus framework, failing to fully leverage the vast amount of available ancient SNP information. Here, we extend the Fisher-KPP framework to estimate the dispersion and selection parameters from European populations
+
+## References used in this Poster
+
+::: {#refs}
+:::
