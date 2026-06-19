@@ -1,0 +1,36 @@
+---
+title: "Composite Likelihood Framework"
+subtitle: "Parameter Inference via Discrete Grid Search"
+format:
+  html:
+    toc: true
+---
+
+## 1. Joint Composite Log-Likelihood
+
+An allele frequency trajectory across time and space consists of independent Single Nucleotide Polymorphisms (SNPs). Assuming independence between loci (ignoring linkage disequilibrium across sampled fragments), we construct a **Joint Composite Log-Likelihood ($\mathcal{L}_{joint}$)** by summing individual log-likelihoods:
+
+$$\mathcal{L}_{joint}(D, s) = \sum_{k=1}^{M} \log L_k(D, s)$$
+
+Where $M$ is the total batch size of independent SNPs analyzed, and $\log L_k$ represents the log-likelihood of the $k$-th SNP given its empirical spatiotemporal samples.
+
+---
+
+## 2. Probability Distributions
+
+We evaluate the fit between the empirical observation (sampled chromosome count $x$ out of a total $N$ chromosomes) and the deterministic PDE prediction $\hat{p}$ using two distinct statistical frameworks:
+
+### Standard Binomial Model
+The standard Binomial distribution assumes that sampling variance is strictly defined by the mean trajectory:
+
+$$\log L_k(D, s) = \sum_{j=1}^{S} \left[ \log \binom{N_j}{x_j} + x_j \log(\hat{p}_j) + (N_j - x_j)\log(1 - \hat{p}_j) \right]$$
+
+Where $S$ is the number of historical spatiotemporal sampling windows available for that specific allele.
+
+## 2. Discrete Grid Search Strategy
+
+Instead of relying on continuous gradient-based optimization, the parameter space is evaluated across a predefined, discrete grid of biologically plausible values for the global Diffusion Coefficient ($D$) and local selection ($s$).
+
+### The Pipeline Flow
+
+For each combination of parameters defined in the grid matrix, the pipeline computes the joint score using a brute-force approach:
