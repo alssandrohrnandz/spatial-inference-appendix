@@ -4,7 +4,6 @@ project:
 
 website:
   title: "Spatial Inference Framework"
-  site-url: "https://alssandrohrnandz.github.io/spatial-inference-appendix/"
   description: "Mathematical foundations of a likelihood-based framework for spatial population genetics."
   navbar: 
     background: "#333"

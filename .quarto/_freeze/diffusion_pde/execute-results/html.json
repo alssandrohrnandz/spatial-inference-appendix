@@ -1,0 +1,15 @@
+{
+  "hash": "6ae4bdc2c81b8edb305e2839294881a2",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"The Spatial Diffusion Model\"\nsubtitle: \"Modeling Allele Frequency Dynamics via Fisher-KPP Ecuations\"\nformat:\n  html:\n    toc: true\n---\n\n## 1. Continuous Space: The Fisher-KPP Equation\n\nTo track how the expected frequency of an allele, $p(t, x, y)$, changes across a continuous geographical landscape over time, we employ a generalized two-dimensional **Fisher-KPP (Kolmogorov-Petrovsky-Piscounov)** partial differential equation (PDE):\n\n$$\\frac{\\partial p}{\\partial t} = D \\left( \\frac{\\partial^2 p}{\\partial x^2} + \\frac{\\partial^2 p}{\\partial y^2} \\right) + \\phi(p)$$\n\nWhere:\n* $D$ represents the **Diffusion Coefficient**, corresponding to the spatial migration rate per generation.\n* $\\phi(p)$ is the **Reaction Term**, modeling natural selection. \n\nAssuming a generalized selection model with selection coefficient $s$ and dominance $h$, the selection term is defined as:\n\n$$\\phi(p) = p(1-p)\\Big[p \\cdot 2s + h \\cdot (1-2p)\\Big]$$\n\n> **Neutral Case Scenario:** For strictly neutral alleles ($s = 0$), the reaction term collapses ($\\phi(p) = 0$), reducing the model to pure Laplacian spatial diffusion:\n> $$\\frac{\\partial p}{\\partial t} = D \\left( \\frac{\\partial^2 p}{\\partial x^2} + \\frac{\\partial^2 p}{\\partial y^2} \\right)$$\n\n---\n\n## 2. Discrete Space Discretization (Finite Differences)\n\nSince computational analysis takes place on a finite geographic grid of size $n \\times n$ (with spatial steps $\\Delta x, \\Delta y$), we discretize the spatial laplacian using a second-order conservative **Finite Difference Method**.\n\n### Flux Boundary Conditions\nTo preserve mass and handle boundary limits gracefully, we calculate numerical fluxes at the cell interfaces. The spatial updating scheme implemented in R for a grid cell $(i, j)$ is formulated as follows:\n\n\n::: {.cell}\n\n```{.r .cell-code}\ndiffusion2D <- function(t, conc, par) {\nConc <- matrix(nrow = n, ncol = n, data = conc) # vector to 2-D matrix\ndConc <- Conc*(1-Conc)*(Conc*d+s*(1-2*Conc)) # consumption\nBND <- rep(1, n) # boundary concentration\n\n# constant production in certain cells\ndConc[ii]<- dConc[ii]+ p\n# diffusion in X-direction; boundaries=imposed concentration\n\nFlux <- -Dx * rbind(rep(0, n), (Conc[2:n,]-Conc[1:(n-1),]),\nrep(0, n) )/dx\ndConc <- dConc - (Flux[2:(n+1),] - Flux[1:n,])/dx\n\n# diffusion in Y-direction\n\nFlux <- -Dy * cbind(rep(0, n), (Conc[,2:n]-Conc[,1:(n-1)]),\nrep(0, n))/dy\ndConc <- dConc - (Flux[,2:(n+1)]-Flux[,1:n])/dy\nreturn(list(as.vector(dConc)))\n}\n```\n:::\n\n\nThis numerical structure enforces reflection boundaries (zero-flux) at the edges of the geographic grid, ensuring that allele frequencies are constrained mathematically between $[0, 1]$.",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

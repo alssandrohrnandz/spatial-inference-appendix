@@ -2,6 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://halh.github.io/SMBE_Poster/likelihood_framework.html</loc>
+<<<<<<< HEAD
     <lastmod>2026-06-19T03:46:04.322Z</lastmod>
   </url>
   <url>
@@ -15,5 +16,20 @@
   <url>
     <loc>https://halh.github.io/SMBE_Poster/index.html</loc>
     <lastmod>2026-06-19T03:46:04.316Z</lastmod>
+=======
+    <lastmod>2026-06-19T03:24:20.883Z</lastmod>
+  </url>
+  <url>
+    <loc>https://halh.github.io/SMBE_Poster/diffusion_pde.html</loc>
+    <lastmod>2026-06-19T03:39:41.525Z</lastmod>
+  </url>
+  <url>
+    <loc>https://halh.github.io/SMBE_Poster/BackgroundResearch_Bibliography.html</loc>
+    <lastmod>2026-06-19T03:38:22.424Z</lastmod>
+  </url>
+  <url>
+    <loc>https://halh.github.io/SMBE_Poster/index.html</loc>
+    <lastmod>2026-06-19T03:38:19.352Z</lastmod>
+>>>>>>> f27e18a6ca61e1e10acad12a5be697247d0d496b
   </url>
 </urlset>
